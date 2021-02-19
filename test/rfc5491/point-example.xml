@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<presence xmlns="urn:ietf:params:xml:ns:pidf" entity="pres:point2d@example.com" xmlns:gp="urn:ietf:params:xml:ns:pidf:geopriv10" xmlns:dm="urn:ietf:params:xml:ns:pidf:data-model" xmlns:gs="http://www.opengis.net/pidflo/1.0" xmlns:gml="http://www.opengis.net/gml">
+  <dm:device id="point2d">
+    <dm:timestamp>2007-06-22T20:57:29.000Z</dm:timestamp>
+    <status>
+      <gp:geopriv>
+        <gp:usage-rules>
+          <gp:retransmission-allowed>no</gp:retransmission-allowed>
+        </gp:usage-rules>
+        <gp:method>Wiremap</gp:method>
+        <gp:location-info>
+          <gs:Point srsName="urn:ogc:def:crs:EPSG::4326">
+            <gml:pos>-34.407 150.883</gml:pos>
+          </gs:Point>
+        </gp:location-info>
+      </gp:geopriv>
+    </status>
+  </dm:device>
+</presence>

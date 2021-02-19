@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<presence xmlns="urn:ietf:params:xml:ns:pidf" entity="pres:domain.com" xmlns:gp="urn:ietf:params:xml:ns:pidf:geopriv10" xmlns:dm="urn:ietf:params:xml:ns:pidf:data-model" xmlns:gs="http://www.opengis.net/pidflo/1.0" xmlns:gml="http://www.opengis.net/gml">
+  <dm:tuple id="ue">
+    <status>
+      <gp:geopriv>
+        <gp:usage-rules>
+          <gp:retransmission-allowed>yes</gp:retransmission-allowed>
+        </gp:usage-rules>
+        <gp:method>Cell</gp:method>
+        <gp:location-info>
+          <gs:Point srsName="urn:ogc:def:crs:EPSG::4326">
+            <gml:pos>12.345 67.89</gml:pos>
+          </gs:Point>
+        </gp:location-info>
+      </gp:geopriv>
+    </status>
+  </dm:tuple>
+</presence>
