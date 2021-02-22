@@ -1,7 +1,8 @@
 {
-  "version": "0.2.0",
+  "version": "0.2.1",
   "license": "MIT",
   "main": "dist/browser/index.js",
+  "module": "dist/browser/index.js",
   "typings": "dist/browser/index.d.ts",
   "files": [
     "dist"
@@ -37,7 +38,10 @@
   },
   "name": "pidf-lo",
   "author": "Gabriel Unterholzer",
-  "module": "dist/browser/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dec112/pidf-lo-javascript"
+  },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^4.9.2",
     "husky": "^5.0.9",
