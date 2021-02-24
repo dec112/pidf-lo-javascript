@@ -28,6 +28,8 @@ const formatXML = (xml: string) => {
   const reg = /(>)(<)(\/*)/g;
   let pad = 0;
 
+  // TODO: also include spacing and newlines for xml namespaces so they are nicely aligned under each other
+
   xml = xml.replace(reg, '$1\r\n$2$3');
 
   return xml.split('\r\n').map((node) => {

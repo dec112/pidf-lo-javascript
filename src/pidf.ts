@@ -96,7 +96,8 @@ export class Civic extends Location {
 
 export class Point extends Location {
   public static nodeName: string = 'Point';
-  protected nodeName: string = Point.nodeName;
+
+  public readonly srsName: string = 'urn:ogc:def:crs:EPSG::4326';
 
   constructor(
     public latitude: number,
@@ -130,16 +131,22 @@ export class Point extends Location {
     return;
   }
 
-  toXML(doc: XMLDocument, rootNode: Element): Element {
-    rootNode.setAttribute('xmlns:gs', 'http://www.opengis.net/pidflo/1.0');
+  protected _getPosElement(doc: XMLDocument, rootNode: Element): Element {
     rootNode.setAttribute('xmlns:gml', 'http://www.opengis.net/gml');
-
-    const root = doc.createElement(`gs:${this.nodeName}`);
-    root.setAttribute('srsName', "urn:ogc:def:crs:EPSG::4326");
 
     const pos = doc.createElement(`gml:pos`);
     pos.textContent = `${this.latitude} ${this.longitude}`;
-    root.appendChild(pos);
+    
+    return pos;
+  }
+
+  toXML(doc: XMLDocument, rootNode: Element): Element {
+    rootNode.setAttribute('xmlns:gml', 'http://www.opengis.net/gml');
+
+    const root = doc.createElement(`gml:${Point.nodeName}`);
+    root.setAttribute('srsName', this.srsName);
+
+    root.appendChild(this._getPosElement(doc, rootNode));
 
     return root;
   }
@@ -155,8 +162,6 @@ export class Circle extends Point {
     public method: Model.LocationMethod,
   ) {
     super(latitude, longitude, method);
-
-    this.nodeName = Circle.nodeName;
   }
 
   static fromXML = (node: Element, method: Model.LocationMethod): Circle | undefined => {
@@ -181,7 +186,15 @@ export class Circle extends Point {
   }
 
   toXML(doc: XMLDocument, rootNode: Element): Element {
-    const root = super.toXML(doc, rootNode);
+    // TODO: centralize this somehow...
+    // I don't want to have those strings everywhere in the code
+    rootNode.setAttribute('xmlns:gs', 'http://www.opengis.net/pidflo/1.0');
+    rootNode.setAttribute('xmlns:gml', 'http://www.opengis.net/gml');
+
+    const root = doc.createElement(`gs:${Circle.nodeName}`);
+    root.setAttribute('srsName', this.srsName);
+
+    root.appendChild(this._getPosElement(doc, rootNode));
 
     const radius = doc.createElement('gs:radius');
     radius.setAttribute('uom', 'urn:ogc:def:uom:EPSG::9001');
