@@ -1,9 +1,9 @@
 {
   "version": "0.2.2",
   "license": "MIT",
-  "main": "dist/browser/index.js",
+  "main": "dist/node/index.js",
   "module": "dist/browser/index.js",
-  "typings": "dist/browser/index.d.ts",
+  "typings": "dist/types/index.d.ts",
   "files": [
     "dist"
   ],
@@ -12,7 +12,7 @@
   },
   "scripts": {
     "start": "ENV_TYPE=browser tsdx watch --format esm --name index",
-    "build": "sh ./scripts/build.sh",
+    "build": "node ./scripts/build.js",
     "build:browser": "ENV_TYPE=browser tsdx build --target web --format esm --name index",
     "build:node": "ENV_TYPE=node tsdx build --target node --format cjs --name index",
     "build:all": "tsdx build --target node --format esm --name index",
@@ -44,6 +44,7 @@
   },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^4.9.2",
+    "find-root": "^1.1.0",
     "husky": "^5.0.9",
     "rollup-plugin-replace": "^2.2.0",
     "tsdx": "^0.14.1",

@@ -3,7 +3,6 @@ const envType = process.env.ENV_TYPE;
 
 module.exports = {
   rollup(config) {
-
     // ensures node version and browser version are in two distinct folders
     config.output.file = config.output.file.replace('/dist/', `/dist/${envType || 'all'}/`);
 
@@ -13,9 +12,6 @@ module.exports = {
     if (envType)
       config.plugins.push(   
         replace({ 'process.envType': `'${envType}'` }),
-        // by default we always import the browser-version of dependencies
-        // TODO: this has to be solved more elegantly
-        replace({ 'dist/browser': `dist/${envType}` }),
       );
     return config;
   },
