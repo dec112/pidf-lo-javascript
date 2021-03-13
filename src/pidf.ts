@@ -506,4 +506,6 @@ export class PidfLo {
 
     return returnVal;
   }
+
+  equals = (pidfLo: PidfLo) => XMLCompat.toXMLString(this.toXML()) === XMLCompat.toXMLString(pidfLo.toXML());
 }
