@@ -136,7 +136,7 @@ export class Point extends Location {
 
     const pos = doc.createElement(`gml:pos`);
     pos.textContent = `${this.latitude} ${this.longitude}`;
-    
+
     return pos;
   }
 
@@ -507,5 +507,11 @@ export class PidfLo {
     return returnVal;
   }
 
-  equals = (pidfLo: PidfLo) => XMLCompat.toXMLString(this.toXML()) === XMLCompat.toXMLString(pidfLo.toXML());
+  equals = (pidfLo: PidfLo) => {
+    try {
+      return XMLCompat.toXMLString(this.toXML()) === XMLCompat.toXMLString(pidfLo.toXML());
+    } catch {
+      return false;
+    }
+  }
 }
