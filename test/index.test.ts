@@ -27,4 +27,15 @@ describe('basic PIDF-LO tests', () => {
 
     expect(defaultPidf.equals(wrongClone)).toBe(false);
   });
+
+  it('does not generate PIDF from invalid simple location', () => {
+    const pidf = PidfLo.fromSimpleLocation({
+      latitude: undefined,
+      longitude: 12.546,
+      radius: 10,
+      method: LocationMethod.GPS,
+    });
+
+    expect(pidf).toBe(undefined);
+  })
 })

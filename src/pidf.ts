@@ -463,6 +463,10 @@ export class PidfLo {
       );
     }
 
+    if (locType.locations.length === 0)
+      // obviously we were not able to create a location...
+      return undefined;
+
     return pidflo;
   }
 
