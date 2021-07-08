@@ -1,5 +1,5 @@
 /**
- * Location methods according to https://tools.ietf.org/html/rfc4119#section-6.1
+ * Location methods according to https://www.iana.org/assignments/method-tokens/method-tokens.xhtml
  */
 export enum LocationMethod {
   /**
@@ -142,7 +142,7 @@ export interface SimpleLocation {
   /**
    * The method how the location was obtained by the caller's device
    */
-  method?: LocationMethod,
+  method?: LocationMethod | string,
   /**
    * The timestamp when the location was initially retreived (e.g. from the GPS sensors)
    */

@@ -16,7 +16,6 @@ describe('PidfLo rfc5491 examples', () => {
     const point = new Point(
       -34.407,
       150.883,
-      //@ts-expect-error
       'Wiremap',
     );
     device.locations.push(point);

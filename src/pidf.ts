@@ -3,7 +3,7 @@ import { XMLCompat } from './xml';
 
 abstract class Location {
   constructor(
-    public method: Model.LocationMethod,
+    public method: Model.LocationMethod | string,
   ) { }
 
   abstract toXML(document: XMLDocument, rootNode: Element): Element;
@@ -15,7 +15,7 @@ export class Civic extends Location {
 
   constructor(
     public address: Model.CivicAddress,
-    public method: Model.LocationMethod,
+    public method: Model.LocationMethod | string,
   ) {
     super(method);
   }
@@ -40,7 +40,7 @@ export class Civic extends Location {
     parent.appendChild(node);
   }
 
-  static fromXML = (node: Element, method: Model.LocationMethod): Civic | undefined => {
+  static fromXML = (node: Element, method: Model.LocationMethod | string): Civic | undefined => {
     const addr: Model.CivicAddress = {
       A1: Civic.getValueIfAvailable(node, 'A1'),
       A2: Civic.getValueIfAvailable(node, 'A2'),
@@ -102,12 +102,12 @@ export class Point extends Location {
   constructor(
     public latitude: number,
     public longitude: number,
-    public method: Model.LocationMethod,
+    public method: Model.LocationMethod | string,
   ) {
     super(method);
   }
 
-  static fromXML = (node: Element, method: Model.LocationMethod): Point | undefined => {
+  static fromXML = (node: Element, method: Model.LocationMethod | string): Point | undefined => {
     try {
       const pos = XMLCompat.getElementsByLocalName(node, 'pos')[0];
       const posSplit = pos?.textContent?.split(' ');
@@ -159,12 +159,12 @@ export class Circle extends Point {
     public latitude: number,
     public longitude: number,
     public radius: number,
-    public method: Model.LocationMethod,
+    public method: Model.LocationMethod | string,
   ) {
     super(latitude, longitude, method);
   }
 
-  static fromXML = (node: Element, method: Model.LocationMethod): Circle | undefined => {
+  static fromXML = (node: Element, method: Model.LocationMethod | string): Circle | undefined => {
     try {
       const point = Point.fromXML(node, method);
 
@@ -219,7 +219,8 @@ abstract class LocationType {
   fromXML = (xml: Element): LocationType => {
     this.id = xml.getAttribute('id') || undefined
 
-    const method = XMLCompat.getElementsByLocalName(xml, 'method')[0]?.textContent as Model.LocationMethod;
+    // TODO: is an empty string allowed?
+    const method = XMLCompat.getElementsByLocalName(xml, 'method')[0]?.textContent || '';
     const locInfoElements = XMLCompat.getElementsByLocalName(xml, 'location-info');
 
     if (locInfoElements.length > 0) {
