@@ -35,7 +35,7 @@ describe('PidfLo SimpleLocation Circle', () => {
     expect(simple).toHaveProperty('radius', 24);
     expect(simple).toHaveProperty('method', LocationMethod.GPS);
 
-    expect(parsed.entity).toBe('pres:user@domain.com');
+    expect(parsed.entity).toBe('sip:user@domain.com');
 
     expect(parsed.locationTypes[0]).toBeInstanceOf(Tuple);
     expect(parsed.locationTypes[0].retransmissionAllowed).toBe(false);

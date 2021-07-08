@@ -1,6 +1,8 @@
 import * as Model from './interfaces';
 import { XMLCompat } from './xml';
 
+const PRESENTITY_PROTOCOL = 'pres:';
+
 abstract class Location {
   constructor(
     public method: Model.LocationMethod | string,
@@ -359,15 +361,18 @@ export class PidfLo {
     if (e) {
       try {
         const url = new URL(e);
-        // presentity
-        url.protocol = 'pres';
+
+        // if there is no protocol we add "pres:"
+        if (!url.protocol)
+          url.protocol = PRESENTITY_PROTOCOL;
+
         e = url.toString();
       }
       catch {
-        // if it does not already start with 'pres:', we just add it
+        // if it does not already start with "pres:"", we just add it
         // however, it still might not be fully correct
-        if (e.indexOf('pres:') !== 0)
-          e = `pres:${e}`;
+        if (e.indexOf(PRESENTITY_PROTOCOL) !== 0)
+          e = `${PRESENTITY_PROTOCOL}${e}`;
       }
     }
 
