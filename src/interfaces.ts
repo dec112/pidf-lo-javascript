@@ -130,6 +130,16 @@ export interface CivicAddress {
    * Example: 10027-0401
    */
   PC?: string,
+
+  /**
+   * Elements used in Austria \ 
+   * Defined in https://datatracker.ietf.org/doc/html/rfc5774#appendix-A.1
+   */
+
+  /**
+   * Street name and identifier
+   */
+  RD?: string,
 }
 
 /**

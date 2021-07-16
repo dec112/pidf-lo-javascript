@@ -59,6 +59,7 @@ export class Civic extends Location {
       PC: Civic.getValueIfAvailable(node, 'PC'),
       POD: Civic.getValueIfAvailable(node, 'POD'),
       PRD: Civic.getValueIfAvailable(node, 'PRD'),
+      RD: Civic.getValueIfAvailable(node, 'RD'),
       STS: Civic.getValueIfAvailable(node, 'STS'),
       country: Civic.getValueIfAvailable(node, 'country'),
     };
@@ -89,6 +90,7 @@ export class Civic extends Location {
     Civic.addElementIfNotUndefined(doc, root, prefix, 'PC', adr.PC);
     Civic.addElementIfNotUndefined(doc, root, prefix, 'POD', adr.POD);
     Civic.addElementIfNotUndefined(doc, root, prefix, 'PRD', adr.PRD);
+    Civic.addElementIfNotUndefined(doc, root, prefix, 'RD', adr.RD);
     Civic.addElementIfNotUndefined(doc, root, prefix, 'STS', adr.STS);
     Civic.addElementIfNotUndefined(doc, root, prefix, 'country', adr.country);
 
