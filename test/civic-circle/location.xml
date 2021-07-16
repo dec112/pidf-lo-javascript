@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<presence xmlns="urn:ietf:params:xml:ns:pidf" entity="sip:user@domain.com" xmlns:gp="urn:ietf:params:xml:ns:pidf:geopriv10" xmlns:dm="urn:ietf:params:xml:ns:pidf:data-model" xmlns:gs="http://www.opengis.net/pidflo/1.0" xmlns:gml="http://www.opengis.net/gml" xmlns:cl="urn:ietf:params:xml:ns:pidf:geopriv10:civicLoc">
+  <dm:tuple id="ue">
+    <status>
+      <gp:geopriv>
+        <gp:usage-rules>
+          <gp:retransmission-allowed>no</gp:retransmission-allowed>
+        </gp:usage-rules>
+        <gp:method>GPS</gp:method>
+        <gp:location-info>
+          <gs:Circle srsName="urn:ogc:def:crs:EPSG::4326">
+            <gml:pos>48.123 14.456</gml:pos>
+            <gs:radius uom="urn:ogc:def:uom:EPSG::9001">24</gs:radius>
+          </gs:Circle>
+          <cl:civicAddress>
+            <cl:A1>Wien</cl:A1>
+            <cl:A4>Meidling</cl:A4>
+            <cl:HNO>51A</cl:HNO>
+            <cl:PC>1120</cl:PC>
+            <cl:RD>Fockygasse</cl:RD>
+            <cl:country>AT</cl:country>
+          </cl:civicAddress>
+        </gp:location-info>
+      </gp:geopriv>
+    </status>
+  </dm:tuple>
+</presence>
