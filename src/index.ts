@@ -9,6 +9,7 @@ export {
 } from './pidf';
 
 export {
+  CivicAddress,
   LocationMethod,
   SimpleLocation,
 } from './interfaces'
