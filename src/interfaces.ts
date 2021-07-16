@@ -34,6 +34,9 @@ export enum LocationMethod {
 
 /**
  * https://tools.ietf.org/html/rfc4119
+ * 
+ * Hints for Austria: \
+ * https://datatracker.ietf.org/doc/html/rfc5774
  */
 export interface CivicAddress {
   /**
@@ -48,21 +51,25 @@ export interface CivicAddress {
   A1?: string,
   /**
    * county parish, gun (JP), district (IN) \
+   * https://datatracker.ietf.org/doc/html/rfc5774#appendix-A.4.2: political district name \
    * Example: King's County
    */
   A2?: string,
   /**
    * city, township, shi (JP) \
+   * https://datatracker.ietf.org/doc/html/rfc5774#appendix-A.4.2: commune name \
    * Example: New York
    */
   A3?: string,
   /**
    * city division, borough, city district, ward, chou (JP) \
+   * https://datatracker.ietf.org/doc/html/rfc5774#appendix-A.4.2: village name \
    * Example: Manhattan
    */
   A4?: string,
   /**
    * neighborhood, block \
+   * https://datatracker.ietf.org/doc/html/rfc5774#appendix-A.4.2: cadastral municipality name \
    * Example: Morningside Heights
    */
   A5?: string
@@ -98,6 +105,7 @@ export interface CivicAddress {
   HNS?: string,
   /**
    * Landmark or vanity address \
+   * https://datatracker.ietf.org/doc/html/rfc5774#appendix-A.1: Hofname \
    * Example: Low Library
    */
   LMK?: string,
@@ -113,6 +121,7 @@ export interface CivicAddress {
   FLR?: string,
   /**
    * Name (residence, business or office occupant) \
+   * https://datatracker.ietf.org/doc/html/rfc5774#appendix-A.1: Volgoname \
    * Example: Joe's Barbershop
    */
   NAM?: string,
