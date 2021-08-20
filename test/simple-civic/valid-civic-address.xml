@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<presence xmlns="urn:ietf:params:xml:ns:pidf" entity="pres:lkh-schaerding.at" xmlns:gp="urn:ietf:params:xml:ns:pidf:geopriv10" xmlns:dm="urn:ietf:params:xml:ns:pidf:data-model" xmlns:cl="urn:ietf:params:xml:ns:pidf:geopriv10:civicLoc">
+<presence xmlns="urn:ietf:params:xml:ns:pidf" entity="pres:lkh-schaerding.at" xmlns:gp="urn:ietf:params:xml:ns:pidf:geopriv10" xmlns:dm="urn:ietf:params:xml:ns:pidf:data-model" xmlns:ca="urn:ietf:params:xml:ns:pidf:geopriv10:civicAddr">
   <dm:tuple id="ue">
     <status>
       <gp:geopriv>
@@ -8,14 +8,14 @@
         </gp:usage-rules>
         <gp:method>802.11</gp:method>
         <gp:location-info>
-          <cl:civicAddress>
-            <cl:A1>Upper Austria</cl:A1>
-            <cl:A4>Schärding</cl:A4>
-            <cl:FLR>5</cl:FLR>
-            <cl:NAM>Hospital</cl:NAM>
-            <cl:PC>4780</cl:PC>
-            <cl:country>AT</cl:country>
-          </cl:civicAddress>
+          <ca:civicAddress>
+            <ca:A1>Upper Austria</ca:A1>
+            <ca:A4>Schärding</ca:A4>
+            <ca:FLR>5</ca:FLR>
+            <ca:NAM>Hospital</ca:NAM>
+            <ca:PC>4780</ca:PC>
+            <ca:country>AT</ca:country>
+          </ca:civicAddress>
         </gp:location-info>
       </gp:geopriv>
     </status>

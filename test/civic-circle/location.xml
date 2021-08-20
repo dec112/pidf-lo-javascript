@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<presence xmlns="urn:ietf:params:xml:ns:pidf" entity="sip:user@domain.com" xmlns:gp="urn:ietf:params:xml:ns:pidf:geopriv10" xmlns:dm="urn:ietf:params:xml:ns:pidf:data-model" xmlns:gs="http://www.opengis.net/pidflo/1.0" xmlns:gml="http://www.opengis.net/gml" xmlns:cl="urn:ietf:params:xml:ns:pidf:geopriv10:civicLoc">
+<presence xmlns="urn:ietf:params:xml:ns:pidf" entity="sip:user@domain.com" xmlns:gp="urn:ietf:params:xml:ns:pidf:geopriv10" xmlns:dm="urn:ietf:params:xml:ns:pidf:data-model" xmlns:gs="http://www.opengis.net/pidflo/1.0" xmlns:gml="http://www.opengis.net/gml" xmlns:ca="urn:ietf:params:xml:ns:pidf:geopriv10:civicAddr">
   <dm:tuple id="ue">
     <status>
       <gp:geopriv>
@@ -12,14 +12,14 @@
             <gml:pos>48.123 14.456</gml:pos>
             <gs:radius uom="urn:ogc:def:uom:EPSG::9001">24</gs:radius>
           </gs:Circle>
-          <cl:civicAddress>
-            <cl:A1>Wien</cl:A1>
-            <cl:A4>Meidling</cl:A4>
-            <cl:HNO>51A</cl:HNO>
-            <cl:PC>1120</cl:PC>
-            <cl:RD>Fockygasse</cl:RD>
-            <cl:country>AT</cl:country>
-          </cl:civicAddress>
+          <ca:civicAddress>
+            <ca:A1>Wien</ca:A1>
+            <ca:A4>Meidling</ca:A4>
+            <ca:HNO>51A</ca:HNO>
+            <ca:PC>1120</ca:PC>
+            <ca:RD>Fockygasse</ca:RD>
+            <ca:country>AT</ca:country>
+          </ca:civicAddress>
         </gp:location-info>
       </gp:geopriv>
     </status>

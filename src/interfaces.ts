@@ -132,7 +132,10 @@ export interface CivicAddress {
   PC?: string,
 
   /**
-   * Elements used in Austria \ 
+   * New PIDF-LO elements
+   * https://datatracker.ietf.org/doc/html/rfc5139
+   * 
+   * Some of the elements are used in Austria \ 
    * Defined in https://datatracker.ietf.org/doc/html/rfc5774#appendix-A.1
    */
 

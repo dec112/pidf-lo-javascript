@@ -68,8 +68,10 @@ export class Civic extends Location {
   }
 
   toXML(doc: XMLDocument, rootNode: Element): Element {
-    const prefix = 'cl';
-    rootNode.setAttribute(`xmlns:${prefix}`, 'urn:ietf:params:xml:ns:pidf:geopriv10:civicLoc');
+    const prefix = 'ca';
+    // Changed to new namespace according to
+    // https://datatracker.ietf.org/doc/html/rfc5139
+    rootNode.setAttribute(`xmlns:${prefix}`, 'urn:ietf:params:xml:ns:pidf:geopriv10:civicAddr');
 
     const root = doc.createElement(`${prefix}:${this.nodeName}`);
 
