@@ -402,6 +402,8 @@ export class PidfLo {
     return doc;
   }
 
+  toXMLString = (): string => XMLCompat.toXMLString(this.toXML());
+
   static fromXML = (xml: string): PidfLo | undefined => {
     const document = XMLCompat.getDocumentFromString(xml);
 
