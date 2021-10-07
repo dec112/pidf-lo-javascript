@@ -158,6 +158,10 @@ export interface SimpleLocation {
    */
   longitude?: number,
   /**
+   * Altitude as WGS84 compatible decimal number
+   */
+  altitude?: number,
+  /**
    * Radius (accuracy) of the given location in meters
    */
   radius?: number,

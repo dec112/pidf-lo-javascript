@@ -9,7 +9,7 @@
         <gp:method>Cell</gp:method>
         <gp:location-info>
           <gml:Point srsName="urn:ogc:def:crs:EPSG::4326">
-            <gml:pos>12.345 67.89</gml:pos>
+            <gml:pos>12.345 67.89 36.7</gml:pos>
           </gml:Point>
         </gp:location-info>
       </gp:geopriv>

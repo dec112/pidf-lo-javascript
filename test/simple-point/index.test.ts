@@ -11,6 +11,7 @@ describe('PidfLo SimpleLocation Point', () => {
     const pidf = PidfLo.fromSimpleLocation({
       latitude: 12.345,
       longitude: 67.890,
+      altitude: 36.7,
       method: LocationMethod.Cell,
     }, 'domain.com');
 
@@ -33,6 +34,7 @@ describe('PidfLo SimpleLocation Point', () => {
 
     expect(simple).toHaveProperty('latitude', 12.345);
     expect(simple).toHaveProperty('longitude', 67.89);
+    expect(simple).toHaveProperty('altitude', 36.7);
     expect(simple).not.toHaveProperty('radius');
     expect(simple).toHaveProperty('method', LocationMethod.Cell);
 

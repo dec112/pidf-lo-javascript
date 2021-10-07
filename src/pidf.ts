@@ -109,6 +109,7 @@ export class Point extends Location {
     public latitude: number,
     public longitude: number,
     public method: Model.LocationMethod | string,
+    public altitude?: number,
   ) {
     super(method);
   }
@@ -118,17 +119,22 @@ export class Point extends Location {
       const pos = XMLCompat.getElementsByLocalName(node, 'pos')[0];
       const posSplit = pos?.textContent?.split(' ');
 
-      if (!posSplit)
+      // must be at least of length 2 (lat and lon)
+      if (!posSplit || posSplit.length < 2)
         return;
 
       const lat = posSplit[0];
       const lon = posSplit[1];
+
+      // altitude https://datatracker.ietf.org/doc/html/rfc5491#section-5.2.1
+      const alt: string | undefined = posSplit[2];
 
       if (lat && lon) {
         return new Point(
           parseFloat(lat),
           parseFloat(lon),
           method,
+          alt ? parseFloat(alt) : undefined,
         );
       }
     }
@@ -142,6 +148,10 @@ export class Point extends Location {
 
     const pos = doc.createElement(`gml:pos`);
     pos.textContent = `${this.latitude} ${this.longitude}`;
+
+    // altitude https://datatracker.ietf.org/doc/html/rfc5491#section-5.2.1
+    if (this.altitude)
+      pos.textContent += ` ${this.altitude}`;
 
     return pos;
   }
@@ -166,6 +176,7 @@ export class Circle extends Point {
     public longitude: number,
     public radius: number,
     public method: Model.LocationMethod | string,
+    public altitude?: number,
   ) {
     super(latitude, longitude, method);
   }
@@ -183,6 +194,7 @@ export class Circle extends Point {
           point.longitude,
           parseFloat(rad),
           method,
+          point.altitude,
         );
       }
     }
@@ -459,11 +471,13 @@ export class PidfLo {
           location.longitude,
           location.radius,
           location.method,
+          location.altitude,
         ) :
         new Point(
           location.latitude,
           location.longitude,
           location.method,
+          location.altitude,
         );
 
       locType.locations.push(loc);
