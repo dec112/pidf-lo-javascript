@@ -1,4 +1,4 @@
-# pidf-lo - PIDF-LO and GEOPRIOV handling
+# pidf-lo - PIDF-LO and GEOPRIV handling
 
 This library should simplify handling PIDF-LO GEOPRIV documents as described in https://tools.ietf.org/html/rfc5491.
 
