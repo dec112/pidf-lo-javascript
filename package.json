@@ -7,9 +7,6 @@
   "files": [
     "dist"
   ],
-  "engines": {
-    "node": ">=10"
-  },
   "scripts": {
     "start": "ENV_TYPE=browser tsdx watch --format esm --name index",
     "build": "node ./scripts/build.js",
@@ -17,21 +14,7 @@
     "build:node": "ENV_TYPE=node tsdx build --target node --format cjs --name index",
     "build:all": "tsdx build --target node --format esm --name index",
     "test": "tsdx test",
-    "lint": "tsdx lint",
-    "prepare": "NODE_ENV=production npm run build",
-    "size": "size-limit",
-    "analyze": "size-limit --why"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "tsdx lint"
-    }
-  },
-  "prettier": {
-    "printWidth": 80,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "es5"
+    "prepare": "NODE_ENV=production npm run build"
   },
   "name": "pidf-lo",
   "author": "Gabriel Unterholzer",
@@ -40,10 +23,8 @@
     "url": "https://github.com/dec112/pidf-lo-javascript"
   },
   "devDependencies": {
-    "@size-limit/preset-small-lib": "^4.9.2",
     "@xmldom/xmldom": "^0.7.5",
     "find-root": "^1.1.0",
-    "husky": "^5.0.9",
     "rollup-plugin-replace": "^2.2.0",
     "tsdx": "^0.14.1",
     "tslib": "^2.1.0",
