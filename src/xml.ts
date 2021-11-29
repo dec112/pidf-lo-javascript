@@ -15,7 +15,7 @@ else {
     DOMImplementation,
     XMLSerializer,
     DOMParser,
-  } = require('xmldom');
+  } = require('@xmldom/xmldom');
 
   domImplementation = new DOMImplementation();
   xmlSerializer = new XMLSerializer();
