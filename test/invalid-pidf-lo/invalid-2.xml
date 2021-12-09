@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<presence xmlns="urn:ietf:params:xml:ns:pidf"
+  xmlns:gp="urn:ietf:params:xml:ns:pidf:geopriv10"
+  xmlns:gbp="urn:ietf:params:xml:ns:pidf:geopriv10:basicPolicy"
+  xmlns:cl="urn:ietf:params:xml:ns:pidf:geopriv10:civicAddr"
+  xmlns:gml="http://www.opengis.net/gml"
+  xmlns:gs="http://www.opengis.net/pidflo/1.0"
+  xmlns:dm="urn:ietf:params:xml:ns:pidf:data-model" entity=")(§+#*~">
+  <dm:device>
+    <gp:geopriv>
+      <!-- This document includes comments -->
+      <gp:location-info>
+        <gs:Circle srsName="urn:ogc:def:crs:EPSG::4326">
+          <!-- Containing bullshit -->
+          <gml:pos>0 0 xxxxxxx</gml:pos>
+          <!-- Duplicate elements with different values -->
+          <!-- Also this is missing a property -->
+          <gs:radius>20.738000869750977</gs:radius>
+          <gs:radius uom="urn:ogc:def:uom:EPSG::9001">14</gs:radius>
+        </gs:Circle>
+      </gp:location-info>
+      <gp:usage-rules>
+        <gbp:retransmission-allowed>FAlse</gbp:retransmission-allowed>
+        <!-- empty element -->
+        <gbp:retention-expiry></gbp:retention-expiry>
+        <!-- unknown element -->
+        <something-unknown />
+      </gp:usage-rules>
+      <!-- Also here malformed strings -->
+      <gp:method>GPs</gp:method>
+    </gp:geopriv>
+    <dm:deviceID>57ee19fbea08c38f</dm:deviceID>
+    <!-- Element containing bullshit -->
+    <dm:timestamp>123j9föövv</dm:timestamp>
+  </dm:device>
+</presence>

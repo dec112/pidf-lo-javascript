@@ -123,18 +123,18 @@ export class Point extends Location {
       if (!posSplit || posSplit.length < 2)
         return;
 
-      const lat = posSplit[0];
-      const lon = posSplit[1];
+      const lat = parseFloat(posSplit[0]);
+      const lon = parseFloat(posSplit[1]);
 
       // altitude https://datatracker.ietf.org/doc/html/rfc5491#section-5.2.1
-      const alt: string | undefined = posSplit[2];
+      const alt = parseFloat(posSplit[2]);
 
-      if (lat && lon) {
+      if (!isNaN(lat) && !isNaN(lon)) {
         return new Point(
-          parseFloat(lat),
-          parseFloat(lon),
+          lat,
+          lon,
           method,
-          alt ? parseFloat(alt) : undefined,
+          !isNaN(alt) ? alt : undefined,
         );
       }
     }
@@ -280,8 +280,14 @@ abstract class LocationType {
     if (timestampElements.length > 0) {
       const value = timestampElements[0].textContent;
 
-      if (value !== null)
-        this.timestamp = new Date(value);
+      if (value !== null) {
+        const ts = new Date(value);
+
+        // extended date checks to make sure
+        // object is a valid date
+        if (ts instanceof Date && !isNaN(ts.getTime()))
+          this.timestamp = ts;
+      }
     }
 
     return this;
