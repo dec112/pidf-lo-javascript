@@ -5,12 +5,12 @@ import { Circle, PidfLo, Device } from '../../dist/node';
 
 
 describe('PidfLo Invalid Document', () => {
-  const files = [
-    'invalid-1.xml',
-    'invalid-2.xml',
+  const partiallyInvalid = [
+    'invalid-part-1.xml',
+    'invalid-part-2.xml',
   ]
 
-  it.each(files)('gracefully parses invalid document %s', (filename: string) => {
+  it.each(partiallyInvalid)('gracefully parses partially invalid document %s', (filename: string) => {
     const invalidCircle = fs.readFileSync(path.join(__dirname, filename), 'utf-8');
     const parsed = PidfLo.fromXML(invalidCircle);
 
@@ -33,5 +33,20 @@ describe('PidfLo Invalid Document', () => {
     expect(parsed.locationTypes[0].timestamp).toBeUndefined();
 
     expect(parsed.locationTypes[0].locations[0]).toBeInstanceOf(Circle);
+  });
+
+  const completelyInvalid = [
+    'invalid-full-1.xml',
+    'invalid-full-2.xml',
+  ];
+
+  it.each(completelyInvalid)('does not parse fully invalid document %s', (filename: string) => {
+    const invalidCircle = fs.readFileSync(path.join(__dirname, filename), 'utf-8');
+    const parsed = PidfLo.fromXML(invalidCircle);
+
+    if (parsed)
+      expect(parsed.simple).toBeUndefined();
+    else
+      expect(parsed).toBeUndefined();
   });
 });

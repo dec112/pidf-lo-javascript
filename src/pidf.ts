@@ -423,43 +423,44 @@ export class PidfLo {
   toXMLString = (): string => XMLCompat.toXMLString(this.toXML());
 
   static fromXML = (xml: string): PidfLo | undefined => {
-    const document = XMLCompat.getDocumentFromString(xml);
+    try {
+      const document = XMLCompat.getDocumentFromString(xml);
 
-    // this should be the "presence" element
-    const rootElement = document.documentElement;
+      // this should be the "presence" element
+      const rootElement = document.documentElement;
+      const pidf = new PidfLo(rootElement.getAttribute('entity') || undefined);
 
-    if (rootElement.localName !== 'presence')
-      return;
+      for (const unsafeLocTypeNode of Array.from(rootElement.childNodes)) {
+        let locTypeNode: Element;
 
-    const pidf = new PidfLo(rootElement.getAttribute('entity') || undefined);
+        // TODO: safer type checks
+        if (XMLCompat.instanceOfElement(unsafeLocTypeNode))
+          locTypeNode = unsafeLocTypeNode as Element;
+        else
+          continue;
 
-    for (const unsafeLocTypeNode of Array.from(rootElement.childNodes)) {
-      let locTypeNode: Element;
+        let locType: LocationType;
 
-      // TODO: safer type checks
-      if (XMLCompat.instanceOfElement(unsafeLocTypeNode))
-        locTypeNode = unsafeLocTypeNode as Element;
-      else
-        continue;
+        switch (locTypeNode.localName) {
+          case Device.nodeName:
+            locType = Device.fromXML(locTypeNode);
+            break;
+          case Person.nodeName:
+            locType = Person.fromXML(locTypeNode);
+            break;
+          default:
+            locType = Tuple.fromXML(locTypeNode);
+        }
 
-      let locType: LocationType;
-
-      switch (locTypeNode.localName) {
-        case Device.nodeName:
-          locType = Device.fromXML(locTypeNode);
-          break;
-        case Person.nodeName:
-          locType = Person.fromXML(locTypeNode);
-          break;
-        default:
-          locType = Tuple.fromXML(locTypeNode);
+        pidf.locationTypes.push(locType);
       }
 
-      pidf.locationTypes.push(locType);
+      if (pidf.locationTypes.length > 0)
+        return pidf;
+    } catch {
+      /* TODO: While processing XML a lot can go wrong */
+      /* However, it would be better to explicitly handle errors */
     }
-
-    if (pidf.locationTypes.length > 0)
-      return pidf;
 
     return;
   }
