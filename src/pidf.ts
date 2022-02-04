@@ -44,24 +44,25 @@ export class Civic extends Location {
 
   static fromXML = (node: Element, method: Model.LocationMethod | string): Civic | undefined => {
     const addr: Model.CivicAddress = {
+      // adhere to order for civic addresses: https://datatracker.ietf.org/doc/html/rfc5139#section-4
+      country: Civic.getValueIfAvailable(node, 'country'),
       A1: Civic.getValueIfAvailable(node, 'A1'),
       A2: Civic.getValueIfAvailable(node, 'A2'),
       A3: Civic.getValueIfAvailable(node, 'A3'),
       A4: Civic.getValueIfAvailable(node, 'A4'),
       A5: Civic.getValueIfAvailable(node, 'A5'),
       A6: Civic.getValueIfAvailable(node, 'A6'),
-      FLR: Civic.getValueIfAvailable(node, 'FLR'),
+      PRD: Civic.getValueIfAvailable(node, 'PRD'),
+      RD: Civic.getValueIfAvailable(node, 'RD'),
+      STS: Civic.getValueIfAvailable(node, 'STS'),
+      POD: Civic.getValueIfAvailable(node, 'POD'),
       HNO: Civic.getValueIfAvailable(node, 'HNO'),
       HNS: Civic.getValueIfAvailable(node, 'HNS'),
       LMK: Civic.getValueIfAvailable(node, 'LMK'),
       LOC: Civic.getValueIfAvailable(node, 'LOC'),
+      FLR: Civic.getValueIfAvailable(node, 'FLR'),
       NAM: Civic.getValueIfAvailable(node, 'NAM'),
       PC: Civic.getValueIfAvailable(node, 'PC'),
-      POD: Civic.getValueIfAvailable(node, 'POD'),
-      PRD: Civic.getValueIfAvailable(node, 'PRD'),
-      RD: Civic.getValueIfAvailable(node, 'RD'),
-      STS: Civic.getValueIfAvailable(node, 'STS'),
-      country: Civic.getValueIfAvailable(node, 'country'),
     };
 
     return new Civic(addr, method);
@@ -77,24 +78,25 @@ export class Civic extends Location {
 
     const adr = this.address;
 
+    // adhere to order for civic addresses: https://datatracker.ietf.org/doc/html/rfc5139#section-4
+    Civic.addElementIfNotUndefined(doc, root, prefix, 'country', adr.country);
     Civic.addElementIfNotUndefined(doc, root, prefix, 'A1', adr.A1);
     Civic.addElementIfNotUndefined(doc, root, prefix, 'A2', adr.A2);
     Civic.addElementIfNotUndefined(doc, root, prefix, 'A3', adr.A3);
     Civic.addElementIfNotUndefined(doc, root, prefix, 'A4', adr.A4);
     Civic.addElementIfNotUndefined(doc, root, prefix, 'A5', adr.A5);
     Civic.addElementIfNotUndefined(doc, root, prefix, 'A6', adr.A6);
-    Civic.addElementIfNotUndefined(doc, root, prefix, 'FLR', adr.FLR);
+    Civic.addElementIfNotUndefined(doc, root, prefix, 'PRD', adr.PRD);
+    Civic.addElementIfNotUndefined(doc, root, prefix, 'RD', adr.RD);
+    Civic.addElementIfNotUndefined(doc, root, prefix, 'STS', adr.STS);
+    Civic.addElementIfNotUndefined(doc, root, prefix, 'POD', adr.POD);
     Civic.addElementIfNotUndefined(doc, root, prefix, 'HNO', adr.HNO);
     Civic.addElementIfNotUndefined(doc, root, prefix, 'HNS', adr.HNS);
     Civic.addElementIfNotUndefined(doc, root, prefix, 'LMK', adr.LMK);
     Civic.addElementIfNotUndefined(doc, root, prefix, 'LOC', adr.LOC);
+    Civic.addElementIfNotUndefined(doc, root, prefix, 'FLR', adr.FLR);
     Civic.addElementIfNotUndefined(doc, root, prefix, 'NAM', adr.NAM);
     Civic.addElementIfNotUndefined(doc, root, prefix, 'PC', adr.PC);
-    Civic.addElementIfNotUndefined(doc, root, prefix, 'POD', adr.POD);
-    Civic.addElementIfNotUndefined(doc, root, prefix, 'PRD', adr.PRD);
-    Civic.addElementIfNotUndefined(doc, root, prefix, 'RD', adr.RD);
-    Civic.addElementIfNotUndefined(doc, root, prefix, 'STS', adr.STS);
-    Civic.addElementIfNotUndefined(doc, root, prefix, 'country', adr.country);
 
     return root;
   }

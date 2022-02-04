@@ -13,12 +13,12 @@
             <gs:radius uom="urn:ogc:def:uom:EPSG::9001">24</gs:radius>
           </gs:Circle>
           <ca:civicAddress>
+            <ca:country>AT</ca:country>
             <ca:A1>Wien</ca:A1>
             <ca:A4>Meidling</ca:A4>
+            <ca:RD>Fockygasse</ca:RD>
             <ca:HNO>51A</ca:HNO>
             <ca:PC>1120</ca:PC>
-            <ca:RD>Fockygasse</ca:RD>
-            <ca:country>AT</ca:country>
           </ca:civicAddress>
         </gp:location-info>
       </gp:geopriv>

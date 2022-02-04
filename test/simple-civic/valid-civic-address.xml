@@ -9,12 +9,12 @@
         <gp:method>802.11</gp:method>
         <gp:location-info>
           <ca:civicAddress>
+            <ca:country>AT</ca:country>
             <ca:A1>Upper Austria</ca:A1>
             <ca:A4>Schärding</ca:A4>
             <ca:FLR>5</ca:FLR>
             <ca:NAM>Hospital</ca:NAM>
             <ca:PC>4780</ca:PC>
-            <ca:country>AT</ca:country>
           </ca:civicAddress>
         </gp:location-info>
       </gp:geopriv>
