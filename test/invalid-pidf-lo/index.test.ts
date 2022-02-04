@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import { Circle, PidfLo, Device } from '../../dist/node';
+import { PidfLo, Device } from '../../dist/node';
 
 
 describe('PidfLo Invalid Document', () => {
@@ -19,12 +19,8 @@ describe('PidfLo Invalid Document', () => {
 
     const { simple } = parsed;
 
-    expect(simple).toHaveProperty('latitude', 0);
-    expect(simple).toHaveProperty('longitude', 0);
-    expect(simple).toHaveProperty('altitude', undefined);
-    // just takes the first available value if multiple are there
-    expect(simple).toHaveProperty('radius', 20.738000869750977);
-    expect(simple).toHaveProperty('method', 'GPs');
+    // should not be too forgiving if field contains bullshit
+    expect(simple).toBeUndefined()
 
     expect(parsed.entity).toBe('pres:)(§+#*~');
 
@@ -32,7 +28,7 @@ describe('PidfLo Invalid Document', () => {
     expect(parsed.locationTypes[0].retransmissionAllowed).toBe(false);
     expect(parsed.locationTypes[0].timestamp).toBeUndefined();
 
-    expect(parsed.locationTypes[0].locations[0]).toBeInstanceOf(Circle);
+    expect(parsed.locationTypes[0].locations[0]).toBeUndefined();
   });
 
   const completelyInvalid = [

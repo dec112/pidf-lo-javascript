@@ -129,14 +129,22 @@ export class Point extends Location {
       const lon = parseFloat(posSplit[1]);
 
       // altitude https://datatracker.ietf.org/doc/html/rfc5491#section-5.2.1
-      const alt = parseFloat(posSplit[2]);
+      const alt = posSplit.length === 3 ? parseFloat(posSplit[2]) : undefined;
 
-      if (!isNaN(lat) && !isNaN(lon)) {
+      // don't be too forgiving here
+      // every object should be parseable as number
+      if (
+        // lat and lon ALWAYS need be parseable
+        !isNaN(lat) && !isNaN(lon) &&
+        // if alt is defined, it MUST be parseable as number
+        // if it was not defined, we don't care
+        (alt !== undefined ? !isNaN(alt) : true)
+      ) {
         return new Point(
           lat,
           lon,
           method,
-          !isNaN(alt) ? alt : undefined,
+          alt,
         );
       }
     }
