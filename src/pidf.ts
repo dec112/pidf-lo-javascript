@@ -125,10 +125,12 @@ export class Point extends Location {
       if (!posSplit || posSplit.length < 2)
         return;
 
+      // TODO: provide way to expose units of measure for lat/lng
       const lat = parseFloat(posSplit[0]);
       const lon = parseFloat(posSplit[1]);
 
       // altitude https://datatracker.ietf.org/doc/html/rfc5491#section-5.2.1
+      // TODO: provide way to expose units of measure for altitude
       const alt = posSplit.length === 3 ? parseFloat(posSplit[2]) : undefined;
 
       // don't be too forgiving here
@@ -195,14 +197,22 @@ export class Circle extends Point {
     try {
       const point = Point.fromXML(node, method);
 
+      // TODO: provide way to expose units of measure for radius
       const radiusEl = XMLCompat.getElementsByLocalName(node, 'radius')[0];
-      const rad = radiusEl?.textContent;
+      const radString = radiusEl?.textContent;
 
-      if (point && rad) {
+      if (point && radString) {
+        // check if rad is parseable as number
+        const rad = parseFloat(radString);
+
+        // if we can not parse radius circle is not valid
+        if (isNaN(rad))
+          return;
+
         return new Circle(
           point.latitude,
           point.longitude,
-          parseFloat(rad),
+          rad,
           method,
           point.altitude,
         );
