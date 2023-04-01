@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import { LocationMethod, PidfLo, Point, Tuple, XMLCompat } from '../../dist/node';
+import { LocationMethod, PidfLo, Point, Tuple, XMLCompat } from '../..';
 
 const validPoint = fs.readFileSync(path.join(__dirname, 'valid-point.xml'), 'utf-8');
 

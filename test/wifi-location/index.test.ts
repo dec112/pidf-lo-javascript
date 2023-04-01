@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import { Circle, PidfLo } from '../../dist/node';
+import { Circle, PidfLo } from '../..';
 
 const loc = fs.readFileSync(path.join(__dirname, 'location.xml'), 'utf-8');
 

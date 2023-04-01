@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import { Device, PidfLo, Point, XMLCompat } from '../../dist/node';
+import { Device, PidfLo, Point, XMLCompat } from '../..';
 
 const validCircle = fs.readFileSync(path.join(__dirname, 'point-example.xml'), 'utf-8');
 

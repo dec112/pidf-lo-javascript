@@ -1,4 +1,4 @@
-import { Device, LocationMethod, PidfLo, Point } from '../dist/node';
+import { Device, LocationMethod, PidfLo, Point } from '..';
 
 describe('basic PIDF-LO tests', () => {
   it('handles equality correctly', () => {

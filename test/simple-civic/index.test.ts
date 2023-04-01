@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import { LocationMethod, PidfLo, XMLCompat, Civic, Tuple } from '../../dist/node';
+import { LocationMethod, PidfLo, XMLCompat, Civic, Tuple } from '../..';
 
 const validCivicAddress = fs.readFileSync(path.join(__dirname, 'valid-civic-address.xml'), 'utf-8');
 

@@ -1,19 +1,15 @@
 {
   "version": "0.9.2",
   "license": "MIT",
-  "main": "dist/node/index.js",
-  "module": "dist/browser/index.js",
-  "typings": "dist/types/index.d.ts",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "start": "ENV_TYPE=browser tsdx watch --format esm --name index",
-    "build": "node ./scripts/build.js",
-    "build:browser": "ENV_TYPE=browser tsdx build --target web --format esm --name index",
-    "build:node": "ENV_TYPE=node tsdx build --target node --format cjs --name index",
-    "build:all": "tsdx build --target node --format esm --name index",
-    "test": "tsdx test",
+    "start": "tsc --watch",
+    "build": "tsc",
+    "test": "npm run build && NODE_ENV=development jest",
     "prepare": "NODE_ENV=production npm run build"
   },
   "name": "pidf-lo",
@@ -23,12 +19,14 @@
     "url": "https://github.com/dec112/pidf-lo-javascript"
   },
   "devDependencies": {
+    "@types/jest": "^29.5.0",
+    "@types/node": "^18.15.11",
     "@xmldom/xmldom": "^0.7.5",
     "find-root": "^1.1.0",
-    "rollup-plugin-replace": "^2.2.0",
-    "tsdx": "^0.14.1",
-    "tslib": "^2.1.0",
-    "typescript": "^4.1.5"
+    "jest": "^29.5.0",
+    "ts-jest": "^29.0.5",
+    "tslib": "^2.5.0",
+    "typescript": "^4.9.5"
   },
   "peerDependencies": {
     "@xmldom/xmldom": "^0.7.5"

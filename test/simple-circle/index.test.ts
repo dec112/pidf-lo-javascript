@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import { Circle, LocationMethod, PidfLo, Tuple, XMLCompat } from '../../dist/node';
+import { Circle, LocationMethod, PidfLo, Tuple, XMLCompat } from '../..';
 
 const validCircle = fs.readFileSync(path.join(__dirname, 'valid-circle.xml'), 'utf-8');
 

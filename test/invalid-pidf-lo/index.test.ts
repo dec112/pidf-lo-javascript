@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import { PidfLo, Device } from '../../dist/node';
+import { PidfLo, Device } from '../..';
 
 
 describe('PidfLo Invalid Document', () => {
