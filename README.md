@@ -8,8 +8,8 @@ This README currently only describes simple usage of this library. More elaborat
 
 This implemenentation only covers a small portion of the PIDF-LO specification documents and is (by far) not complete. Pull requests are therefore highly honored.
 
-This library requires `xmldom` as a peer-dependency *only* in node.js environments!
-JavaScript browser environments always have a DOM implementation on board, therefore `xmldom` is not needed there.
+This library requires `@xmldom/xmldom` as a peer-dependency *only* in node.js environments!
+JavaScript browser environments always have a DOM implementation on board, therefore `@xmldom/xmldom` is not needed there.
 
 ## Installation
 
@@ -28,8 +28,13 @@ import {
   LocationMethod, 
   PidfLo, 
   XMLCompat,
-// use `pidf-lo/dist/node` for node.js environments
-} from 'pidf-lo/dist/browser';
+} from 'pidf-lo';
+
+// if xmldom interface is available (e.g. on web browsers)
+XMLCompat.initializeWeb();
+// if xmldom interface is NOT available (e.g. on node environments)
+// also don't forget to install required peer dependency @xmldom/xmldom
+XMLCompat.initializeNode();
 
 const pidf = PidfLo.fromSimpleLocation({
   latitude: 48.123,
@@ -50,8 +55,14 @@ console.log(XMLCompat.toXMLString(xmlObj));
 ```typescript
 import { 
   PidfLo, 
-// use `pidf-lo/dist/node` for node.js environments
-} from 'pidf-lo/dist/browser';
+  XMLCompat,
+} from 'pidf-lo';
+
+// if xmldom interface is available (e.g. on web browsers)
+XMLCompat.initializeWeb();
+// if xmldom interface is NOT available (e.g. on node environments)
+// also don't forget to install required peer dependency @xmldom/xmldom
+XMLCompat.initializeNode();
 
 const parsed = PidfLo.fromXML('<xml...>');
 
@@ -70,8 +81,13 @@ import {
   LocationMethod, 
   PidfLo, 
   XMLCompat,
-// use `pidf-lo/dist/node` for node.js environments
-} from 'pidf-lo/dist/browser';
+} from 'pidf-lo';
+
+// if xmldom interface is available (e.g. on web browsers)
+XMLCompat.initializeWeb();
+// if xmldom interface is NOT available (e.g. on node environments)
+// also don't forget to install required peer dependency @xmldom/xmldom
+XMLCompat.initializeNode();
 
 const pidf = PidfLo.fromSimpleLocation({
   civic: {
@@ -96,8 +112,13 @@ console.log(XMLCompat.toXMLString(xmlObj));
 ```typescript
 import { 
   PidfLo, 
-// use `pidf-lo/dist/node` for node.js environments
-} from 'pidf-lo/dist/browser';
+} from 'pidf-lo';
+
+// if xmldom interface is available (e.g. on web browsers)
+XMLCompat.initializeWeb();
+// if xmldom interface is NOT available (e.g. on node environments)
+// also don't forget to install required peer dependency @xmldom/xmldom
+XMLCompat.initializeNode();
 
 const parsed = PidfLo.fromXML('<xml...>');
 
