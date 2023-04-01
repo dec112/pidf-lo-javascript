@@ -2,7 +2,15 @@ import { isDevelopment } from '../environment';
 
 import { initialize as initializeWeb } from './web';
 import { initialize as initializeNode } from './node';
-import { compatObj } from './common';
+
+let compatObj: {
+  domImplementation: DOMImplementation;
+  xmlSerializer: XMLSerializer;
+  domParser: DOMParser;
+  instanceOfElement: (obj: any) => boolean;
+}
+
+export const initialize = (impl: typeof compatObj) => compatObj = impl;
 
 const addXMLProlog = (xmlDocument: string) => `<?xml version="1.0" encoding="UTF-8"?>\r\n${xmlDocument}`;
 
@@ -67,7 +75,18 @@ export const getElementsByLocalName = (element: Element, localName: string, resu
 }
 
 export const XMLCompat = {
+  /**
+   * Initialize XMLCompat with a custom compat object
+   */
+  initialize,
+  /**
+   * Initialize XMLCompat with a web-compatible object
+   */
   initializeWeb,
+  /**
+   * Initialize XMLCompat with @xmldom/xmldom
+   * Must be installed as direct dependency!
+   */
   initializeNode,
 
   createDocument,

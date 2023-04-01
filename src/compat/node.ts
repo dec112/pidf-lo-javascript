@@ -1,4 +1,4 @@
-import { initialize as init } from "./common"
+import { initialize as init } from "."
 
 export const initialize = () => {
   const {

@@ -16,9 +16,4 @@ export {
 
 export {
   XMLCompat,
-  createDocument,
-  getDocumentFromString,
-  getElementsByLocalName,
-  instanceOfElement,
-  toXMLString,
 } from './xml';
