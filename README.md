@@ -28,13 +28,16 @@ import {
   LocationMethod, 
   PidfLo, 
   XMLCompat,
+
+  getNodeImpl,
+  getWebImpl,
 } from 'pidf-lo';
 
 // if xmldom interface is available (e.g. on web browsers)
-XMLCompat.initializeWeb();
+XMLCompat.initialize(getNodeImpl());
 // if xmldom interface is NOT available (e.g. on node environments)
 // also don't forget to install required peer dependency @xmldom/xmldom
-XMLCompat.initializeNode();
+XMLCompat.initialize(getWebImpl());
 
 const pidf = PidfLo.fromSimpleLocation({
   latitude: 48.123,
@@ -56,13 +59,16 @@ console.log(XMLCompat.toXMLString(xmlObj));
 import { 
   PidfLo, 
   XMLCompat,
+
+  getNodeImpl,
+  getWebImpl,
 } from 'pidf-lo';
 
 // if xmldom interface is available (e.g. on web browsers)
-XMLCompat.initializeWeb();
+XMLCompat.initialize(getNodeImpl());
 // if xmldom interface is NOT available (e.g. on node environments)
 // also don't forget to install required peer dependency @xmldom/xmldom
-XMLCompat.initializeNode();
+XMLCompat.initialize(getWebImpl());
 
 const parsed = PidfLo.fromXML('<xml...>');
 
@@ -80,14 +86,16 @@ console.log(`${simpleLoc.latitude} ${simpleLoc.longitude}`);
 import { 
   LocationMethod, 
   PidfLo, 
-  XMLCompat,
+
+  getNodeImpl,
+  getWebImpl,
 } from 'pidf-lo';
 
 // if xmldom interface is available (e.g. on web browsers)
-XMLCompat.initializeWeb();
+XMLCompat.initialize(getNodeImpl());
 // if xmldom interface is NOT available (e.g. on node environments)
 // also don't forget to install required peer dependency @xmldom/xmldom
-XMLCompat.initializeNode();
+XMLCompat.initialize(getWebImpl());
 
 const pidf = PidfLo.fromSimpleLocation({
   civic: {
@@ -111,14 +119,17 @@ console.log(XMLCompat.toXMLString(xmlObj));
 
 ```typescript
 import { 
-  PidfLo, 
+  PidfLo,
+  
+  getNodeImpl,
+  getWebImpl,
 } from 'pidf-lo';
 
 // if xmldom interface is available (e.g. on web browsers)
-XMLCompat.initializeWeb();
+XMLCompat.initialize(getNodeImpl());
 // if xmldom interface is NOT available (e.g. on node environments)
 // also don't forget to install required peer dependency @xmldom/xmldom
-XMLCompat.initializeNode();
+XMLCompat.initialize(getWebImpl());
 
 const parsed = PidfLo.fromXML('<xml...>');
 

@@ -1,5 +1,5 @@
-import { XMLCompat } from '..';
+import { XMLCompat, getNodeImpl } from '..';
 
 beforeAll(() => {
-  XMLCompat.initializeNode();
+  XMLCompat.initialize(getNodeImpl());
 });

@@ -16,4 +16,7 @@ export {
 
 export {
   XMLCompat,
+  CompatImpl,
+  getNodeImpl,
+  getWebImpl,
 } from './xml';
