@@ -51,7 +51,8 @@ export const getElementsByLocalName = (element: Element, localName: string, resu
       else
         continue;
 
-      if (child.localName === localName)
+      // case-insensitive comparison
+      if (child.localName.toLowerCase() === localName.toLowerCase())
         result.push(child);
 
       getElementsByLocalName(child, localName, result);
