@@ -6,20 +6,26 @@ export interface CompatImpl {
   toXMLString: (document: Document) => string;
 }
 
-let compatObject: CompatImpl;
+let compatObject: CompatImpl | undefined = undefined;
+const getCompatObject = (): CompatImpl => {
+  if (!compatObject)
+    throw new Error('Initialize XMLCompat before using pidf-lo!');
 
-export const initialize = (impl: typeof compatObject) => compatObject = impl;
+  return compatObject;
+}
+
+export const initialize = (impl: CompatImpl) => compatObject = impl;
 
 export const createDocument = (): Document =>
-  compatObject.createDocument('', '', null);
+  getCompatObject().createDocument('', '', null);
 export const getElementsByLocalName = (element: Element, localName: string, result: Element[] = []) =>
-  compatObject.getElementsByLocalName(element, localName, result);
+  getCompatObject().getElementsByLocalName(element, localName, result);
 export const instanceOfElement = (obj: any): boolean =>
-  compatObject.instanceOfElement(obj);
+  getCompatObject().instanceOfElement(obj);
 export const getDocumentFromString = (value: string): Document =>
-  compatObject.parseFromString(value, 'text/xml');
+  getCompatObject().parseFromString(value, 'text/xml');
 export const toXMLString = (document: Document): string =>
-  compatObject.toXMLString(document);
+  getCompatObject().toXMLString(document);
 
 export const XMLCompat = {
   /**
