@@ -12,10 +12,14 @@ export const getWebImpl = (): CompatImpl => {
   const xmlSerializer = new XMLSerializer();
 
   return {
-    createDocument: document.implementation.createDocument,
+    createDocument: (namespace, qualifiedName, doctype) =>
+      document.implementation.createDocument(namespace, qualifiedName, doctype),
     getElementsByLocalName,
-    instanceOfElement: (obj) => obj instanceof Element,
-    parseFromString: (string: string, type: DOMParserSupportedType) => domParser.parseFromString(string, type),
-    toXMLString: (document: Document) => toXMLString(xmlSerializer, document),
+    instanceOfElement: (obj) =>
+      obj instanceof Element,
+    parseFromString: (string, type) =>
+      domParser.parseFromString(string, type),
+    toXMLString: (document) =>
+      toXMLString(xmlSerializer, document),
   };
 }

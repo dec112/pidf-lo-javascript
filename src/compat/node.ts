@@ -19,14 +19,17 @@ export const getNodeImpl = (): CompatImpl => {
   const domParser = new DOMParser();
 
   return {
-    createDocument: domImplementation.createDocument,
+    createDocument: (namespace, qualifiedName, doctype) =>
+      domImplementation.createDocument(namespace, qualifiedName, doctype),
     getElementsByLocalName,
     instanceOfElement: (obj) =>
       // TODO: That's currently a limitation of xmldom as it does not expose level 2 DOM interfaces
       // see https://github.com/xmldom/xmldom/pull/41 for more info
       // this will be fixed in xmldom version 1.0
       !!(obj.nodeName && obj.localName),
-    parseFromString: (string: string, type: DOMParserSupportedType) => domParser.parseFromString(string, type),
-    toXMLString: (document: Document) => toXMLString(xmlSerializer, document),
+    parseFromString: (string, type) =>
+      domParser.parseFromString(string, type),
+    toXMLString: (document) =>
+      toXMLString(xmlSerializer, document),
   };
 }
