@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import { Circle, PidfLo } from '../..';
+import { Circle, Device, PidfLo } from '../..';
 
 const loc = fs.readFileSync(path.join(__dirname, 'location.xml'), 'utf-8');
 
@@ -21,6 +21,7 @@ describe('PidfLo Location Wifi GPS', () => {
 
     expect(parsed.entity).toBe('sip:+43123456789@ims.mno.at');
 
+    expect(parsed.locationTypes[0]).toBeInstanceOf(Device)
     expect(parsed.locationTypes[0].locations[0]).toBeInstanceOf(Circle);
   });
 });
