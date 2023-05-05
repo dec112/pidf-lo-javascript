@@ -4,6 +4,7 @@ import path from 'path';
 import { Circle, LocationMethod, PidfLo, Tuple, XMLCompat } from '../..';
 
 const validCircle = fs.readFileSync(path.join(__dirname, 'valid-circle.xml'), 'utf-8');
+const invalidTuple = fs.readFileSync(path.join(__dirname, 'invalid-tuple.xml'), 'utf-8');
 
 describe('PidfLo SimpleLocation Circle', () => {
   it('generates valid xml for circle', () => {
@@ -22,7 +23,7 @@ describe('PidfLo SimpleLocation Circle', () => {
     expect(xml).toEqual(validCircle);
   });
 
-  it('parses valid xml circle', () => {
+  const parseCircle = (xml: string) => {
     const parsed = PidfLo.fromXML(validCircle);
 
     if (!parsed)
@@ -41,5 +42,15 @@ describe('PidfLo SimpleLocation Circle', () => {
     expect(parsed.locationTypes[0].retransmissionAllowed).toBe(false);
 
     expect(parsed.locationTypes[0].locations[0]).toBeInstanceOf(Circle);
+  }
+
+  it('parses valid xml circle', () => {
+    parseCircle(validCircle);
+  });
+
+  it('does not care if tuple is in wrong namespace', () => {
+    // previously pidf-lo generated tuples with "DataModel" (dm) namespace
+    // therefore we keep compatibility with this wrong pidf-lo to be backward compatible
+    parseCircle(invalidTuple);
   });
 });

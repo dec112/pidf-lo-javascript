@@ -1,7 +1,26 @@
 import * as Model from './interfaces';
 import { XMLCompat } from './xml';
+import { getPrefixedXmlTag } from './utils';
 
 const PRESENTITY_PROTOCOL = 'pres:';
+
+enum XmlNamespacePrefix {
+  'GEOPROV10' = 'gp',
+  'PIDFLO1.0' = 'gs',
+  'CIVICADDRESS' = 'ca',
+  'OPENGISGML' = 'gml',
+  'DATAMODEL' = 'dm',
+};
+
+const XmlNamespace: {
+  [key in XmlNamespacePrefix]: string
+} = {
+  [XmlNamespacePrefix.GEOPROV10]: 'urn:ietf:params:xml:ns:pidf:geopriv10',
+  [XmlNamespacePrefix['PIDFLO1.0']]: 'http://www.opengis.net/pidflo/1.0',
+  [XmlNamespacePrefix.CIVICADDRESS]: 'urn:ietf:params:xml:ns:pidf:geopriv10:civicAddr',
+  [XmlNamespacePrefix.OPENGISGML]: 'http://www.opengis.net/gml',
+  [XmlNamespacePrefix.DATAMODEL]: 'urn:ietf:params:xml:ns:pidf:data-model',
+};
 
 abstract class Location {
   constructor(
@@ -69,10 +88,10 @@ export class Civic extends Location {
   }
 
   toXML(doc: XMLDocument, rootNode: Element): Element {
-    const prefix = 'ca';
+    const prefix = XmlNamespacePrefix.CIVICADDRESS;
     // Changed to new namespace according to
     // https://datatracker.ietf.org/doc/html/rfc5139
-    rootNode.setAttribute(`xmlns:${prefix}`, 'urn:ietf:params:xml:ns:pidf:geopriv10:civicAddr');
+    rootNode.setAttribute(`xmlns:${prefix}`, XmlNamespace[XmlNamespacePrefix.CIVICADDRESS]);
 
     const root = doc.createElement(`${prefix}:${this.nodeName}`);
 
@@ -156,9 +175,10 @@ export class Point extends Location {
   }
 
   protected _getPosElement(doc: XMLDocument, rootNode: Element): Element {
-    rootNode.setAttribute('xmlns:gml', 'http://www.opengis.net/gml');
+    const prefix = XmlNamespacePrefix.OPENGISGML
+    rootNode.setAttribute(`xmlns:${prefix}`, XmlNamespace[prefix]);
 
-    const pos = doc.createElement(`gml:pos`);
+    const pos = doc.createElement(`${prefix}:pos`);
     pos.textContent = `${this.latitude} ${this.longitude}`;
 
     // altitude https://datatracker.ietf.org/doc/html/rfc5491#section-5.2.1
@@ -169,9 +189,10 @@ export class Point extends Location {
   }
 
   toXML(doc: XMLDocument, rootNode: Element): Element {
-    rootNode.setAttribute('xmlns:gml', 'http://www.opengis.net/gml');
+    const prefix = XmlNamespacePrefix.OPENGISGML
+    rootNode.setAttribute(`xmlns:${prefix}`, XmlNamespace[prefix]);
 
-    const root = doc.createElement(`gml:${Point.nodeName}`);
+    const root = doc.createElement(`${prefix}:${Point.nodeName}`);
     root.setAttribute('srsName', this.srsName);
 
     root.appendChild(this._getPosElement(doc, rootNode));
@@ -224,17 +245,23 @@ export class Circle extends Point {
   }
 
   toXML(doc: XMLDocument, rootNode: Element): Element {
-    // TODO: centralize this somehow...
-    // I don't want to have those strings everywhere in the code
-    rootNode.setAttribute('xmlns:gs', 'http://www.opengis.net/pidflo/1.0');
-    rootNode.setAttribute('xmlns:gml', 'http://www.opengis.net/gml');
+    const gsPrefix = XmlNamespacePrefix['PIDFLO1.0'];
 
-    const root = doc.createElement(`gs:${Circle.nodeName}`);
+    rootNode.setAttribute(
+      `xmlns:${gsPrefix}`,
+      XmlNamespace[gsPrefix]
+    );
+    rootNode.setAttribute(
+      `xmlns:${XmlNamespacePrefix.OPENGISGML}`,
+      XmlNamespace[XmlNamespacePrefix.OPENGISGML]
+    );
+
+    const root = doc.createElement(`${gsPrefix}:${Circle.nodeName}`);
     root.setAttribute('srsName', this.srsName);
 
     root.appendChild(this._getPosElement(doc, rootNode));
 
-    const radius = doc.createElement('gs:radius');
+    const radius = doc.createElement(`${gsPrefix}:radius`);
     radius.setAttribute('uom', 'urn:ogc:def:uom:EPSG::9001');
     radius.textContent = `${this.radius}`;
     root.appendChild(radius);
@@ -253,6 +280,7 @@ abstract class LocationType {
   ) { }
 
   abstract getName(): string;
+  abstract getNamespacePrefix(): XmlNamespacePrefix | undefined;
 
   fromXML = (xml: Element): LocationType => {
     this.id = xml.getAttribute('id') || undefined
@@ -314,14 +342,26 @@ abstract class LocationType {
   };
 
   toXML = (doc: Document, root: Element): Element => {
-    root.setAttribute('xmlns:gp', 'urn:ietf:params:xml:ns:pidf:geopriv10');
-    root.setAttribute('xmlns:dm', 'urn:ietf:params:xml:ns:pidf:data-model');
+    const gpPrefix = XmlNamespacePrefix.GEOPROV10;
 
-    const locTypeNode = doc.createElement(`dm:${this.getName()}`);
+    root.setAttribute(
+      `xmlns:${gpPrefix}`,
+      XmlNamespace[gpPrefix],
+    );
+
+    const nsPrefix = this.getNamespacePrefix();
+    if (nsPrefix) {
+      root.setAttribute(
+        `xmlns:${nsPrefix}`,
+        XmlNamespace[nsPrefix],
+      );
+    }
+
+    const locTypeNode = doc.createElement(getPrefixedXmlTag(this.getName(), nsPrefix));
     locTypeNode.setAttribute('id', this.id || '');
 
     if (this.timestamp) {
-      const timestampNode = doc.createElement('dm:timestamp');
+      const timestampNode = doc.createElement(getPrefixedXmlTag('timestamp', nsPrefix));
       timestampNode.textContent = this.timestamp.toISOString();
       locTypeNode.appendChild(timestampNode);
     }
@@ -360,6 +400,7 @@ abstract class LocationType {
 export class Device extends LocationType {
   static nodeName = 'device';
   getName = () => Device.nodeName;
+  getNamespacePrefix = (): XmlNamespacePrefix | undefined => XmlNamespacePrefix.DATAMODEL;
 
   static fromXML = (xml: Element): Device => {
     const device = new Device();
@@ -369,6 +410,7 @@ export class Device extends LocationType {
 export class Tuple extends LocationType {
   static nodeName = 'tuple';
   getName = () => Tuple.nodeName;
+  getNamespacePrefix = (): XmlNamespacePrefix | undefined => undefined;
 
   static fromXML = (xml: Element): Tuple => {
     const tuple = new Tuple();
@@ -378,6 +420,7 @@ export class Tuple extends LocationType {
 export class Person extends LocationType {
   static nodeName = 'person';
   getName = () => Person.nodeName;
+  getNamespacePrefix = (): XmlNamespacePrefix | undefined => XmlNamespacePrefix.DATAMODEL;
 
   static fromXML = (xml: Element): Person => {
     const person = new Person();
