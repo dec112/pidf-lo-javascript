@@ -528,35 +528,49 @@ export class PidfLo {
     return;
   }
 
-  static fromSimpleLocation = (location: Model.SimpleLocation, originSipUri?: string): PidfLo | undefined => {
+  static fromSimpleLocation(locations: Model.SimpleLocation[], originSipUri?: string): PidfLo | undefined;
+  static fromSimpleLocation(location: Model.SimpleLocation, originSipUri?: string): PidfLo | undefined;
+  static fromSimpleLocation(param1: any, originSipUri?: string): PidfLo | undefined {
+    const locations = Array.isArray(param1) ? param1 : [param1];
+    const firstLoc = locations[0];
+
+    if (!firstLoc)
+      return undefined;
+
     const pidflo = new PidfLo(originSipUri);
     const locType = new Tuple('ue');
-    locType.timestamp = location.timestamp;
+
+    // first location is used for fetching the timestamp
+    locType.timestamp = firstLoc.timestamp;
     pidflo.locationTypes.push(locType);
 
-    if (location.latitude && location.longitude && location.method) {
-      const loc = location.radius ?
-        new Circle(
-          location.latitude,
-          location.longitude,
-          location.radius,
-          location.method,
-          location.altitude,
-        ) :
-        new Point(
-          location.latitude,
-          location.longitude,
-          location.method,
-          location.altitude,
+    for (let i = 0, size = locations.length; i < size; i++) {
+      const location = locations[i];
+
+      if (location.latitude && location.longitude && location.method) {
+        const loc = location.radius ?
+          new Circle(
+            location.latitude,
+            location.longitude,
+            location.radius,
+            location.method,
+            location.altitude,
+          ) :
+          new Point(
+            location.latitude,
+            location.longitude,
+            location.method,
+            location.altitude,
+          );
+
+        locType.locations.push(loc);
+      }
+
+      if (location.civic && location.method) {
+        locType.locations.push(
+          new Civic(location.civic, location.method)
         );
-
-      locType.locations.push(loc);
-    }
-
-    if (location.civic && location.method) {
-      locType.locations.push(
-        new Civic(location.civic, location.method)
-      );
+      }
     }
 
     if (locType.locations.length === 0)
