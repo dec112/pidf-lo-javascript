@@ -1,5 +1,5 @@
 {
-  "version": "0.9.2",
+  "version": "0.9.3",
   "license": "MIT",
   "main": "dist/node/index.js",
   "module": "dist/browser/index.js",
@@ -23,7 +23,7 @@
     "url": "https://github.com/dec112/pidf-lo-javascript"
   },
   "devDependencies": {
-    "@xmldom/xmldom": "^0.7.5",
+    "@xmldom/xmldom": "^0.8.8",
     "find-root": "^1.1.0",
     "rollup-plugin-replace": "^2.2.0",
     "tsdx": "^0.14.1",
@@ -31,6 +31,6 @@
     "typescript": "^4.1.5"
   },
   "peerDependencies": {
-    "@xmldom/xmldom": "^0.7.5"
+    "@xmldom/xmldom": "^0.8.8"
   }
 }
