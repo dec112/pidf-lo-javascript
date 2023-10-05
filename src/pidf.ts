@@ -603,19 +603,36 @@ export class PidfLo {
     };
 
     // TODO: support more than circle and point and civic location
+    // ATTENTION: This looks similar to what is implemented in `simpleArray` get accessor
+    // however, it isn't (and it's even intended)!
+
+    // hasCircleOrPoint ensures that not multiple circles or points
+    // are processed and thus possibly mixed up
+    // the same is applicable to hasCivic
+    let hasCircleOrPoint = false;
+    let hasCivic = false;
     for (const loc of lt.locations) {
       // both Circle and Point are compatible with our SimpleLocation interface
-      if (loc instanceof Circle || loc instanceof Point)
+      if (!hasCircleOrPoint && (loc instanceof Circle || loc instanceof Point)) {
+        hasCircleOrPoint = true;
         returnVal = {
           ...returnVal,
           ...loc,
         };
-      else if (loc instanceof Civic)
+      }
+      else if (!hasCivic && loc instanceof Civic) {
+        hasCivic = true;
         returnVal = {
           ...returnVal,
           method: loc.method,
           civic: loc.address,
         };
+      }
+
+      // stop processing if at least one circle or point
+      // and one civic location have been processed
+      if (hasCircleOrPoint && hasCivic)
+        break;
     }
 
     return returnVal;
