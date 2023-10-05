@@ -581,6 +581,41 @@ export class PidfLo {
   }
 
   /**
+   * Retrieve a SimpleLocation array for easy interaction with PidfLo locations \
+   * Keep in mind that this might not necessarily represent all information that's available in PidfLo!
+   */
+  get simpleArray(): Model.SimpleLocation[] {
+    const res: Model.SimpleLocation[] = [];
+
+    for (const locType of this.locationTypes) {
+      const baseVal: Model.SimpleLocation = {
+        timestamp: locType.timestamp,
+      };
+
+      // TODO: support more than circle and point and civic location
+      // ATTENTION: This looks similar to what is implemented in `simple` get accessor
+      // however, it isn't (and it's even intended)!
+      for (const loc of locType.locations) {
+        if (loc instanceof Circle || loc instanceof Point) {
+          res.push({
+            ...baseVal,
+            ...loc,
+          });
+        }
+        else if (loc instanceof Civic) {
+          res.push({
+            ...baseVal,
+            method: loc.method,
+            civic: loc.address,
+          });
+        }
+      }
+    }
+
+    return res;
+  }
+
+  /**
    * Retrieve a SimpleLocation object for easy interaction with PidfLo locations \
    * Keep in mind that this might not necessarily represent all information that's available in PidfLo!
    */

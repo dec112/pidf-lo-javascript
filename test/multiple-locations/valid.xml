@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<presence xmlns="urn:ietf:params:xml:ns:pidf" entity="sip:user@domain.com" xmlns:gp="urn:ietf:params:xml:ns:pidf:geopriv10" xmlns:gs="http://www.opengis.net/pidflo/1.0" xmlns:gml="http://www.opengis.net/gml">
+  <tuple id="ue">
+    <status>
+      <gp:geopriv>
+        <gp:usage-rules>
+          <gp:retransmission-allowed>no</gp:retransmission-allowed>
+        </gp:usage-rules>
+        <gp:method>GPS</gp:method>
+        <gp:location-info>
+          <gml:Point srsName="urn:ogc:def:crs:EPSG::4326">
+            <gml:pos>12.345 67.89 36.7</gml:pos>
+          </gml:Point>
+        </gp:location-info>
+        <gp:location-info>
+          <gs:Circle srsName="urn:ogc:def:crs:EPSG::4326">
+            <gml:pos>48.123 14.456</gml:pos>
+            <gs:radius uom="urn:ogc:def:uom:EPSG::9001">24</gs:radius>
+          </gs:Circle>
+        </gp:location-info>
+      </gp:geopriv>
+    </status>
+  </tuple>
+</presence>
