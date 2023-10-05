@@ -289,8 +289,8 @@ abstract class LocationType {
     const method = XMLCompat.getElementsByLocalName(xml, 'method')[0]?.textContent || '';
     const locInfoElements = XMLCompat.getElementsByLocalName(xml, 'location-info');
 
-    if (locInfoElements.length > 0) {
-      for (const unsafeLocationNode of Array.from(locInfoElements[0].childNodes)) {
+    for (const locInfoElement of locInfoElements) {
+      for (const unsafeLocationNode of Array.from(locInfoElement.childNodes)) {
         let locationNode: Element;
 
         // TODO: safer type checks
