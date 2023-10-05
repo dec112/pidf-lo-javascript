@@ -13,7 +13,7 @@
     "build:main": "tsc --module commonjs --outDir ./dist/main",
     "build:module": "tsc --module esnext --outDir ./dist/module",
     "test": "npm run build && NODE_ENV=development jest",
-    "prepare": "NODE_ENV=production npm run build"
+    "prepare": "NODE_ENV=production npm test"
   },
   "name": "pidf-lo",
   "author": "Gabriel Unterholzer",
