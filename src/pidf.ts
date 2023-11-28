@@ -492,7 +492,13 @@ export class PidfLo {
     pidflo.locationTypes.push(locType);
 
     if (location.latitude && location.longitude && location.method) {
-      const loc = location.radius ?
+      // the smallest radius that's still considered "valid" is 1m
+      // this is an arbitrary choice and not due to any restrictions of a standard
+      // all radius below 1m is considered invalid and therefore
+      // it's treated as Point (instead of Circle)
+      const isValidRadius = location.radius && location.radius >= 1;
+      // this additional radius nullish check is just here to please typescript
+      const loc = location.radius && isValidRadius ?
         new Circle(
           location.latitude,
           location.longitude,

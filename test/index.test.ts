@@ -1,4 +1,4 @@
-import { Device, LocationMethod, PidfLo, Point } from '../dist/node';
+import { Circle, Device, LocationMethod, PidfLo, Point } from '../dist/node';
 
 describe('basic PIDF-LO tests', () => {
   it('handles equality correctly', () => {
@@ -40,5 +40,23 @@ describe('basic PIDF-LO tests', () => {
     });
 
     expect(pidf).toBe(undefined);
-  })
+  });
+
+  it('replaces circles with a point in the case that a radius is below 1 meter', () => {
+    const pidfValid = PidfLo.fromSimpleLocation({
+      latitude: 48.123,
+      longitude: 14.456,
+      radius: 1,
+      method: LocationMethod.GPS,
+    }, 'sip:user@domain.com');
+    expect(pidfValid?.locationTypes[0].locations[0]).toBeInstanceOf(Circle);
+
+    const pidfInvalid = PidfLo.fromSimpleLocation({
+      latitude: 48.123,
+      longitude: 14.456,
+      radius: 0.5,
+      method: LocationMethod.GPS,
+    }, 'sip:user@domain.com');
+    expect(pidfInvalid?.locationTypes[0].locations[0]).toBeInstanceOf(Point);
+  });
 })
