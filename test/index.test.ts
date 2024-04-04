@@ -59,4 +59,45 @@ describe('basic PIDF-LO tests', () => {
     }, 'sip:user@domain.com');
     expect(pidfInvalid?.locationTypes[0].locations[0]).toBeInstanceOf(Point);
   });
-})
+});
+
+describe('PIDF-LO simple', () => {
+  it('can handle multiple simple values with string dates', () => {
+    const locs = [
+      {
+        "longitude": 10,
+        "latitude": 20,
+        "timestamp": "2024-03-22T11:21:38+00:00",
+        "method": "GPS"
+      },
+      {
+        "longitude": 30,
+        "latitude": 40,
+        "timestamp": "2024-03-22T11:24:30+00:00",
+        "method": "GPS"
+      },
+    ];
+
+    const pidf = PidfLo.fromSimpleLocation(locs);
+
+    expect(pidf?.toXMLString).not.toThrow();
+    expect(pidf?.simpleArray.length).toBe(2);
+  });
+
+  it('does not fail on invalid dates', () => {
+    const locs = [
+      {
+        "longitude": 15,
+        "latitude": 46,
+        "timestamp": "xyz",
+        "method": "GPS"
+      },
+    ];
+
+    const pidf = PidfLo.fromSimpleLocation(locs);
+    expect(pidf).not.toBeUndefined();
+    expect(pidf?.simpleArray).not.toBeUndefined();
+    expect(pidf?.simpleArray[0]).not.toBeUndefined();
+    expect(pidf?.simpleArray[0].timestamp).toBeUndefined();
+  });
+});

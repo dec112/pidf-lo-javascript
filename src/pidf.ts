@@ -528,10 +528,10 @@ export class PidfLo {
     return;
   }
 
-  static fromSimpleLocation(locations: Model.SimpleLocation[], originSipUri?: string): PidfLo | undefined;
-  static fromSimpleLocation(location: Model.SimpleLocation, originSipUri?: string): PidfLo | undefined;
+  static fromSimpleLocation(locations: Model.SimpleLocationInput[], originSipUri?: string): PidfLo | undefined;
+  static fromSimpleLocation(location: Model.SimpleLocationInput, originSipUri?: string): PidfLo | undefined;
   static fromSimpleLocation(param1: any, originSipUri?: string): PidfLo | undefined {
-    const locations = Array.isArray(param1) ? param1 : [param1];
+    const locations: Model.SimpleLocationInput[] = Array.isArray(param1) ? param1 : [param1];
     const firstLoc = locations[0];
 
     if (!firstLoc)
@@ -541,7 +541,17 @@ export class PidfLo {
     const locType = new Tuple('ue');
 
     // first location is used for fetching the timestamp
-    locType.timestamp = firstLoc.timestamp;
+    if (typeof firstLoc.timestamp === 'string')
+      locType.timestamp = new Date(firstLoc.timestamp);
+    else
+      locType.timestamp = firstLoc.timestamp;
+
+    // set timestamp undefined, if date is invalid
+    // invalid dates are quite weird, as they are still of type date
+    // but if getTime() returns NaN, we can be sure the date is invalid
+    if (Number.isNaN(locType.timestamp?.getTime()))
+      locType.timestamp = undefined;
+
     pidflo.locationTypes.push(locType);
 
     for (let i = 0, size = locations.length; i < size; i++) {
@@ -552,8 +562,7 @@ export class PidfLo {
         // this is an arbitrary choice and not due to any restrictions of a standard
         // all radius below 1m is considered invalid and therefore
         // it's treated as Point (instead of Circle)
-        const isValidRadius = location.radius && location.radius >= 1;
-        const loc = isValidRadius ?
+        const loc = location.radius !== undefined && location.radius >= 1 ?
           new Circle(
             location.latitude,
             location.longitude,

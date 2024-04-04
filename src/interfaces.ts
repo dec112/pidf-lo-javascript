@@ -1,3 +1,5 @@
+import { OmitStrict } from "./utils"
+
 /**
  * Location methods according to https://www.iana.org/assignments/method-tokens/method-tokens.xhtml
  */
@@ -177,4 +179,15 @@ export interface SimpleLocation {
    * A civic address according to https://tools.ietf.org/html/rfc4119
    */
   civic?: CivicAddress,
+}
+
+/**
+ * This interface is used for input data
+ * and may be less restrictive than SimpleLocation
+ */
+export type SimpleLocationInput = Omit<SimpleLocation, 'timestamp'> & {
+  /**
+   * The timestamp when the location was initially retreived (e.g. from the GPS sensors)
+   */
+  timestamp?: Date | string
 }
