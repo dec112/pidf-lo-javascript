@@ -34,10 +34,10 @@ import {
 } from 'pidf-lo';
 
 // if xmldom interface is available (e.g. on web browsers)
-XMLCompat.initialize(getNodeImpl());
+XMLCompat.initialize(getWebImpl());
 // if xmldom interface is NOT available (e.g. on node environments)
 // also don't forget to install required peer dependency @xmldom/xmldom
-XMLCompat.initialize(getWebImpl());
+XMLCompat.initialize(getNodeImpl());
 
 const pidf = PidfLo.fromSimpleLocation({
   latitude: 48.123,
@@ -92,10 +92,10 @@ import {
 } from 'pidf-lo';
 
 // if xmldom interface is available (e.g. on web browsers)
-XMLCompat.initialize(getNodeImpl());
+XMLCompat.initialize(getWebImpl());
 // if xmldom interface is NOT available (e.g. on node environments)
 // also don't forget to install required peer dependency @xmldom/xmldom
-XMLCompat.initialize(getWebImpl());
+XMLCompat.initialize(getNodeImpl());
 
 const pidf = PidfLo.fromSimpleLocation({
   civic: {
@@ -126,10 +126,10 @@ import {
 } from 'pidf-lo';
 
 // if xmldom interface is available (e.g. on web browsers)
-XMLCompat.initialize(getNodeImpl());
+XMLCompat.initialize(getWebImpl());
 // if xmldom interface is NOT available (e.g. on node environments)
 // also don't forget to install required peer dependency @xmldom/xmldom
-XMLCompat.initialize(getWebImpl());
+XMLCompat.initialize(getNodeImpl());
 
 const parsed = PidfLo.fromXML('<xml...>');
 
