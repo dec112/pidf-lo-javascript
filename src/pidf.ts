@@ -82,6 +82,7 @@ export class Civic extends Location {
       FLR: Civic.getValueIfAvailable(node, 'FLR'),
       NAM: Civic.getValueIfAvailable(node, 'NAM'),
       PC: Civic.getValueIfAvailable(node, 'PC'),
+      UNIT: Civic.getValueIfAvailable(node, 'UNIT'),
     };
 
     return new Civic(addr, method);
@@ -116,6 +117,7 @@ export class Civic extends Location {
     Civic.addElementIfNotUndefined(doc, root, prefix, 'FLR', adr.FLR);
     Civic.addElementIfNotUndefined(doc, root, prefix, 'NAM', adr.NAM);
     Civic.addElementIfNotUndefined(doc, root, prefix, 'PC', adr.PC);
+    Civic.addElementIfNotUndefined(doc, root, prefix, 'UNIT', adr.UNIT);
 
     return root;
   }
@@ -138,7 +140,7 @@ export class Point extends Location {
   static fromXML = (node: Element, method: Model.LocationMethod | string): Point | undefined => {
     try {
       const pos = XMLCompat.getElementsByLocalName(node, 'pos')[0];
-      const posSplit = pos?.textContent?.split(' ');
+      const posSplit = pos?.textContent?.trim().split(' ');
 
       // must be at least of length 2 (lat and lon)
       if (!posSplit || posSplit.length < 2)

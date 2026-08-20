@@ -128,6 +128,12 @@ export interface CivicAddress {
    */
   NAM?: string,
   /**
+   * Unit (apartment, suite) \
+   * https://datatracker.ietf.org/doc/html/rfc5139#page-4 \
+   * Example: 12a
+   */
+  UNIT?: string,
+  /**
    * Postal code \
    * Example: 10027-0401
    */
